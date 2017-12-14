@@ -2,17 +2,11 @@
 <html>
   <head>
     <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
-    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript" src="js/knockout-3.2.0.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBizLop2T6ChioBI80RGcWkPEmp07RPtYI&callback=initMap"
-    async defer></script>
-    <script type="text/javascript" src="js/application.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -23,19 +17,29 @@
         </div>
       </div>
     </nav>
+
     <div class="container-fluid">
-      <div class="row clan">
-        <div class="col-md-2" >
-          <ul>
-            <li></li>
-          </ul>
+      <div class="row">
+        <div class="col-lg-2 clan" >
+          <div>
+        </div>
         </div>
 
-        <div class="col-md-10">
-          <div id="map"></div>
+        <div class="col-lg-10">
+          <div gmapC>
+            <div id="map" ></div>
+          </div>
         </div>
       </div>
 
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/knockout-3.2.0.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBizLop2T6ChioBI80RGcWkPEmp07RPtYI&callback=initMap"
+    async defer></script>
+    <script type="text/javascript" src="js/application.js"></script>
   </body>
 </html>
