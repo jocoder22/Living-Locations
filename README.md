@@ -1,6 +1,6 @@
 # Introduction : This includes
 - What your application is all about
-- Required Libraries and dependencies
+- Required Libraries and dependencies - Knockout js
 - Project Contents ( css, js)
 - Templates (HTML files used - Optional)
 
