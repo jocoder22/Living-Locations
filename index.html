@@ -21,8 +21,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-2 clan">
-          <ul data-bind="Foreach: myPlaces">
-            <li data-bind="value: name"></li>
+          <ul data-bind="foreach: myPlaces">
+            <li>
+              <span  data-bind="text: name"></span>
+            </li>
           </ul>
         </div>
 

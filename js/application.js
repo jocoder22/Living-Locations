@@ -9,32 +9,18 @@ var myApp = function(){
     {name: 'Boypharm', address:'44 white park road newalk NJ 071122'},
     {name: 'Bestdeal', address:'44 white park road newalk NJ 071122'},
     {name: 'Shopbig', address:'44 white park road newalk NJ 071122'},
-    {name: 'Mesuem90', address:'44 white park road newalk NJ 071122'}
+    {name: 'Mesuem906', address:'44 white park road newalk NJ 071122'}
   ];
 
 
   var map;
   var localLocation = {lat: 40.733679, lng: -74.170804};
-  var myPlaces = ko.observableArray([
-    {name: 'Mummy Pot', address:'44 white park road newalk NJ 071122'},
-    {name: 'Cityplay22', address:'44 white park road newalk NJ 071122'},
-    {name: 'TigerMart', address:'44 white park road newalk NJ 071122'},
-    {name: 'Oceonview', address:'44 white park road newalk NJ 071122'},
-    {name: 'Boypharm', address:'44 white park road newalk NJ 071122'},
-    {name: 'Bestdeal', address:'44 white park road newalk NJ 071122'},
-    {name: 'Shopbig', address:'44 white park road newalk NJ 071122'},
-    {name: 'Mesuem90', address:'44 white park road newalk NJ 071122'}
-  ]);
-
-
-
-
-
-  myPlaces.push(model);
+  var myPlaces = ko.observableArray();
 
   ko.utils.arrayForEach(model, function(item) {
     myPlaces.push(item);
   });
+
 
   var updateArray = function () {
     model.forEach(function(PlaceItem){
@@ -68,6 +54,7 @@ var myApp = function(){
 
   init = function () {
     configureBindingHandlers();
+    updateArray();
     ko.applyBindings(myApp);
   };
 
