@@ -16,6 +16,7 @@ var viewModel = function(){
   var map;
   var localLocation = {lat: 40.733679, lng: -74.170804};
   var myPlaces = ko.observableArray();
+  var marker;
 
   var updateArray = function () {
     model.forEach(function(PlaceItem){
@@ -27,28 +28,27 @@ var viewModel = function(){
 		ko.bindingHandlers.mapper2 = {
 				init: function(element, valueAccessor){
 					map = new google.maps.Map(element, {
-						zoom: 15
+						zoom: 13
 					});
 					centerMap(localLocation);
+          var marker = new google.maps.Marker({
+            position: localLocation,
+            map: map,
+            title: 'Hello World!'
+          });
 				}
 		};
 	};
+
 
   var centerMap = function (location) {
 		map.setCenter(location);
 		google.maps.event.trigger(map, 'resize');
 	}
 
-  showMap = function () {
-    map = new google.maps.Map({
-      center: {lat: 40.733679, lng: -74.170804},
-      zoom: 10
-    });
-
-  };
-
   init = function () {
     configureBindingHandlers();
+    marker.setMap(map);
     updateArray();
     ko.applyBindings(viewModel);
   };
@@ -58,6 +58,7 @@ var viewModel = function(){
   return{
     map: map,
     myPlaces: myPlaces,
-    updateArray: updateArray
+    marker: marker,
+
   };
 }();
