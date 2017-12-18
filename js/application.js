@@ -30,6 +30,7 @@ var viewModel = function(){
             center: localLocation,
 						zoom: 13
 					});
+          centerMap(localLocation);
           var marker = new google.maps.Marker({
             position: localLocation,
             map: map,
@@ -39,6 +40,10 @@ var viewModel = function(){
 		};
 	};
 
+  var centerMap = function (location) {
+    map.setCenter(location);
+    google.maps.event.trigger(map, 'resize');
+  }
 
   init = function () {
     configureBindingHandlers();
