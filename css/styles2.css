@@ -1,4 +1,5 @@
-body, html {
+body, html,
+.container-fluid {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -16,7 +17,7 @@ h1, h2, h3, h4, h5 {
   margin: 0;
 }
 
-header, nav, footer, section, article, div {
+header, nav, footer, section, article {
   box-sizing: border-box;
   padding: 0px;
   margin: 0px;
@@ -48,6 +49,4 @@ ul {
 #map {
   height: 100vh;
   width: 100%;
-  min-height: 100%;
-  max-height: none;
 }
