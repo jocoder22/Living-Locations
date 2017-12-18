@@ -1,21 +1,21 @@
 
 var model = [
-  {name: 'Mummy Pot', address:'44 white park road newalk NJ 071122'},
-  {name: 'Cityplay22', address:'44 white park road newalk NJ 071122'},
-  {name: 'TigerMart', address:'44 white park road newalk NJ 071122'},
-  {name: 'Oceonview', address:'44 white park road newalk NJ 071122'},
-  {name: 'Boypharm', address:'44 white park road newalk NJ 071122'},
-  {name: 'Bestdeal', address:'44 white park road newalk NJ 071122'},
-  {name: 'Shopbig', address:'44 white park road newalk NJ 071122'},
-  {name: 'Mesuem906', address:'44 white park road newalk NJ 071122'}
-];
+  {name: 'Robert Treat Center', address: '1 Center St, Newark, NJ 07102', localLocation:[{lat: 40.740631 , lng: -74.167341 }]},
+  {name: 'Center for Law and Justice', address: '123 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.740842 , lng: -74.173199 }]},
+  {name: 'Newark Museum', address: '49 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716 }]},
+  {name: 'New Jersey Institute of Technology', address: '323 Dr Martin Luther King Jr Blvd, Newark, NJ 07102', localLocation:[{lat: 40.742345 , lng: -74.179335 }]},
+  {name: 'University Hospital', address: '150 Bergen St, Newark, NJ 07103', localLocation:[{lat: 40.740356 , lng: -74.190241 }]},
+  {name: 'CityPlex 12', address: '360-394 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.733553 , lng: -74.196379 }]},
+  {name: "Applebee's Grill", address: '383 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
+  {name: "Wendy's Place", address: '427 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.732158 , lng: -74.199454 }]},
+  {name: 'Home Depot', address: '399-443 Springfield Ave Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
 
 
 
 var viewModel = function(){
   var map;
-  var localLocation = {lat: 40.733679, lng: -74.170804};
   var myPlaces = ko.observableArray();
+  var myLocation2;
 
   var updateArray = function () {
     model.forEach(function(PlaceItem){
@@ -23,16 +23,28 @@ var viewModel = function(){
     });
   };
 
+  // var myLocation = ko.computed(function(){
+    //var mylatlng = myPlaces()[0].lat + ',' + myPlaces()[0].lng;
+    //return mylatlng;
+  //});
+
+ var myLocation = model[1].localLocation[0];
+
+ var setmylocation = function (){
+   myLocation2 = myPlaces()[2].localLocation[0];
+ };
+
+
   var configureBindingHandlers = function() {
-		ko.bindingHandlers.mapper2 = {
+		ko.bindingHandlers.mapper = {
 				init: function(element, valueAccessor){
 					map = new google.maps.Map(element, {
-            center: localLocation,
-						zoom: 13
+            center: myLocation2,
+						zoom: 15
 					});
-          centerMap(localLocation);
+          //centerMap(myLocation);
           var marker = new google.maps.Marker({
-            position: localLocation,
+            position: myLocation2,
             map: map,
             title: 'Hello World!'
           });
@@ -40,14 +52,15 @@ var viewModel = function(){
 		};
 	};
 
-  var centerMap = function (location) {
-    map.setCenter(location);
-    google.maps.event.trigger(map, 'resize');
-  }
+  //var centerMap = function (onelocation) {
+    //map.setCenter(onelocation);
+    //google.maps.event.trigger(map, 'resize');
+  //}
 
   init = function () {
     configureBindingHandlers();
     updateArray();
+    setmylocation();
     ko.applyBindings(viewModel);
   };
 

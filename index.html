@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>Neighborhood Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,7 +24,7 @@
       <div class="row" >
         <div class="col-md-2">
           <div class="row" id="hh">
-            <br><br><br>
+            <br><br><br><br><br><br>
             <ul data-bind="foreach: myPlaces">
               <li  data-bind="text: name" class="clan"></li>
             </ul>
@@ -33,7 +33,7 @@
 
         <div class="col-md-10">
           <div class="row">
-            <div data-bind="mapper2"  id="map"></div>
+            <div data-bind="mapper"  id="map"></div>
           </div>
         </div>
       </div>
