@@ -31,7 +31,7 @@ var viewModel = function(){
  var myLocation = model[1].localLocation[0];
 
  var setmylocation = function (){
-   myLocation2 = myPlaces()[2].localLocation[0];
+   myLocation2 = myPlaces()[5].localLocation[0];
  };
 
 
@@ -43,6 +43,7 @@ var viewModel = function(){
 						zoom: 15
 					});
           //centerMap(myLocation);
+          var bounds = new google.maps.LatLngBounds();
           var infowindowcontainer = new google.maps.InfoWindow();
           for (var i = 0; i < model.length; i++) {
             var maklocation = model[i].localLocation[0];
@@ -53,6 +54,7 @@ var viewModel = function(){
               title: maktitle,
               animation: google.maps.Animation.DROP,
               id: i
+
             });
 
             markers.push(marker);
@@ -65,7 +67,12 @@ var viewModel = function(){
             marker.addListener('click', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
+           bounds.extend(markers[i].position);
+
           }
+          map.fitBounds(bounds);
+
+
 
           function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker != marker) {
@@ -84,13 +91,21 @@ var viewModel = function(){
               marker.addListener('doubleclick', function(){
                 infowindow.setMarker(null);
               });
+              map.fitBounds(bounds);
 
             }
+            map.fitBounds(bounds);
+
 
           }
+          map.fitBounds(bounds);
+
+
 
 				}
+
 		};
+
 	};
 
   //var centerMap = function (onelocation) {
