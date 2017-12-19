@@ -43,7 +43,7 @@ var viewModel = function(){
 						zoom: 15
 					});
           //centerMap(myLocation);
-          //var bounds = new google.maps.LatLngBounds();
+          var bounds = new google.maps.LatLngBounds();
           var infowindowcontainer = new google.maps.InfoWindow();
           for (var i = 0; i < model.length; i++) {
             var maklocation = model[i].localLocation[0];
@@ -67,10 +67,10 @@ var viewModel = function(){
             marker.addListener('click', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
-           //bounds.extend(markers[i].position);
+           bounds.extend(markers[i].position);
 
           }
-          //map.fitBounds(bounds);
+          map.fitBounds(bounds);
 
 
 
