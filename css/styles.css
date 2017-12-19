@@ -59,6 +59,10 @@ ul {
   color: #fff ;
 }
 
+span {
+  font-size: 12px;
+}
+
 #map {
   height: 100vh;
   width: 100%;
@@ -67,6 +71,8 @@ ul {
 .pp {
   margin-left: 19px;
 }
+
+
 
 @media screen and (min-width: 1100px) {
   .clan {
@@ -105,8 +111,8 @@ ul {
 
 }
 
-@media screen and (max-width: 600px) {
 
+@media screen and (max-width: 600px) {
   .clan {
     font-size: 10px;
     margin: 0px 20px;
@@ -115,4 +121,28 @@ ul {
     font-size: 11px;
     color: #fff ;
   }
+}
+
+@media screen and (max-width: 420px) {
+  .input-group {
+    width: 66.66667vw;
+    position: relative;
+    float: left;
+    margin-left: 25px;
+  }
+
+  .col-md-2 {
+    width: 0%;
+    position: relative;
+    float: left;
+    height: 100vh;
+  }
+  .col-md-10 {
+    width: 100vw;
+    float: left;
+    position: relative;
+  }
+  .clan {
+    display: none;
+
 }
