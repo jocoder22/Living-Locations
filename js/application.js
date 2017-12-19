@@ -1,6 +1,6 @@
 
 var model = [
-  {name: 'Robert Treat Center', address: '1 Center St, Newark, NJ 07102', localLocation:[{lat: 40.740631 , lng: -74.167341 }]},
+  {name: 'Robert Treat Center', address: '50 Park Pl, Newark, NJ 07102', localLocation:[{lat: 40.739037 , lng: -74.168635}]},
   {name: 'Center for Law and Justice', address: '123 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.740842 , lng: -74.173199 }]},
   {name: 'Newark Museum', address: '49 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716 }]},
   {name: 'New Jersey Institute of Technology', address: '323 Dr Martin Luther King Jr Blvd, Newark, NJ 07102', localLocation:[{lat: 40.742345 , lng: -74.179335 }]},
@@ -11,11 +11,11 @@ var model = [
   {name: 'Home Depot', address: '399-443 Springfield Ave Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
 
 
-
 var viewModel = function(){
   var map;
   var myPlaces = ko.observableArray();
   var myLocation2;
+  var markers = [];
 
   var updateArray = function () {
     model.forEach(function(PlaceItem){
@@ -43,11 +43,52 @@ var viewModel = function(){
 						zoom: 15
 					});
           //centerMap(myLocation);
-          var marker = new google.maps.Marker({
-            position: myLocation2,
-            map: map,
-            title: 'Hello World!'
-          });
+          var infowindowcontainer = new google.maps.InfoWindow();
+          for (var i = 0; i < model.length; i++) {
+            var maklocation = model[i].localLocation[0];
+            var maktitle = model[i].name;
+            var marker = new google.maps.Marker({
+              position: maklocation,
+              map: map,
+              title: maktitle,
+              animation: google.maps.Animation.DROP,
+              id: i
+            });
+
+            markers.push(marker);
+
+
+            //marker.addListener('mouseover', function(){
+            //  populateInfoWindow(this, infowindowcontainer);
+            //});
+
+            marker.addListener('click', function(){
+              populateInfoWindow(this, infowindowcontainer);
+            });
+          }
+
+          function populateInfoWindow(marker, infowindow) {
+            if (infowindow.marker != marker) {
+              infowindow.marker = marker;
+              infowindow.setContent('<div>' + marker.title + '</div>');
+              infowindow.open(map, marker);
+
+              //marker.addListener('mouseout', function(){
+              //  infowindow.close(map, marker);
+              //});
+
+              marker.addListener('closeclick', function(){
+                infowindow.close(map, marker);
+              });
+
+              marker.addListener('doubleclick', function(){
+                infowindow.setMarker(null);
+              });
+
+            }
+
+          }
+
 				}
 		};
 	};
