@@ -35,6 +35,12 @@ ul {
 #hh {
   background-color: black;
   height: 100vh;
+  text-align: center;
+  padding: 20px 15px;
+}
+
+.bb {
+  margin: 0px 14px;
 }
 
 .clan {
