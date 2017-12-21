@@ -1,14 +1,12 @@
 
 var model = [
-  {name: 'Robert Treat Center', address: '50 Park Pl, Newark, NJ 07102', localLocation:[{lat: 40.739037 , lng: -74.168635}]},
-  {name: 'Center for Law and Justice', address: '123 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.740842 , lng: -74.173199 }]},
-  {name: 'Newark Museum', address: '49 Washington St, Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716 }]},
-  {name: 'New Jersey Institute of Technology', address: '323 Dr Martin Luther King Jr Blvd, Newark, NJ 07102', localLocation:[{lat: 40.742345 , lng: -74.179335 }]},
-  {name: 'University Hospital', address: '150 Bergen St, Newark, NJ 07103', localLocation:[{lat: 40.740356 , lng: -74.190241 }]},
-  {name: 'CityPlex 12', address: '360-394 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.733553 , lng: -74.196379 }]},
-  {name: "Applebee's Grill", address: '383 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
-  {name: "Wendy's Place", address: '427 Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.732158 , lng: -74.199454 }]},
-  {name: 'Home Depot', address: '399-443 Springfield Ave Springfield Ave, Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
+  {name: 'Robert Treat Center', address: '50 Park Pl,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.739037 , lng: -74.168635}]},
+  {name: 'Newark Museum', address: '49 Washington St,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716 }]},
+  {name: 'University Hospital', address: '150 Bergen St,', city:'Newark, NJ 07103', localLocation:[{lat: 40.740356 , lng: -74.190241 }]},
+  {name: 'CityPlex 12', address: '360-394 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.733553 , lng: -74.196379 }]},
+  {name: "Applebee's Grill", address: '383 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
+  {name: "Wendy's Place", address: '427 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732158 , lng: -74.199454 }]},
+  {name: 'Home Depot', address: '399-443 Springfield Ave Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
 
 
 var viewModel = function(){
@@ -42,19 +40,24 @@ var viewModel = function(){
             center: myLocation2,
 						zoom: 15
 					});
-          //centerMap(myLocation);
+
+          var defaultIcon = makeMarkerIcon('9e4545',  21);
+          var highlightedIcon = makeMarkerIcon('e50615', 41);
           var bounds = new google.maps.LatLngBounds();
           var infowindowcontainer = new google.maps.InfoWindow();
           for (var i = 0; i < model.length; i++) {
             var maklocation = model[i].localLocation[0];
+            var makaddress = model[i].address;
             var maktitle = model[i].name;
+            var makcity = model[i].city;
             var marker = new google.maps.Marker({
               position: maklocation,
               map: map,
-              title: maktitle,
+              title: maktitle + '<br>' + makaddress + '<br>' + makcity,
               animation: google.maps.Animation.DROP,
+              cursor: 'me me',
+              icon: defaultIcon,
               id: i
-
             });
 
             markers.push(marker);
@@ -67,7 +70,15 @@ var viewModel = function(){
             marker.addListener('click', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
-           bounds.extend(markers[i].position);
+
+            marker.addListener('mouseover', function() {
+              this.setIcon(highlightedIcon);
+            });
+            marker.addListener('mouseout', function() {
+              this.setIcon(defaultIcon);
+            });
+
+            bounds.extend(markers[i].position);
 
           }
           map.fitBounds(bounds);
@@ -77,7 +88,7 @@ var viewModel = function(){
           function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker != marker) {
               infowindow.marker = marker;
-              infowindow.setContent('<div>' + marker.title + '</div>');
+              infowindow.setContent(marker.title);
               infowindow.open(map, marker);
 
               //marker.addListener('mouseout', function(){
@@ -91,21 +102,22 @@ var viewModel = function(){
               marker.addListener('doubleclick', function(){
                 infowindow.setMarker(null);
               });
-              map.fitBounds(bounds);
-
             }
-            map.fitBounds(bounds);
-
-
           }
-          map.fitBounds(bounds);
+
+          function makeMarkerIcon(markerColor, a) {
+            var markerImage = new google.maps.MarkerImage( 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +  '|60|_|%E2%80%A2',
+              new google.maps.Size(a, 34),
+              new google.maps.Point(0, 0),
+              new google.maps.Point(10, 34),
+              new google.maps.Size(a, 34));
+            return markerImage;
+          }
 
 
 
 				}
-
 		};
-
 	};
 
   //var centerMap = function (onelocation) {
