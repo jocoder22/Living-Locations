@@ -53,9 +53,9 @@ var viewModel = function(){
             var marker = new google.maps.Marker({
               position: maklocation,
               map: map,
-              title: maktitle + '<br>' + makaddress + '<br>' + makcity,
+              //title: maktitle,
               animation: google.maps.Animation.DROP,
-              cursor: 'me me',
+              cursor: maktitle + '<br>' + makaddress + '<br>' + makcity,
               icon: defaultIcon,
               id: i
             });
@@ -63,17 +63,18 @@ var viewModel = function(){
             markers.push(marker);
 
 
-            //marker.addListener('mouseover', function(){
-            //  populateInfoWindow(this, infowindowcontainer);
-            //});
-
-            marker.addListener('click', function(){
+            marker.addListener('mouseover', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
+
+            //marker.addListener('click', function(){
+            //  populateInfoWindow(this, infowindowcontainer);
+            //});
 
             marker.addListener('mouseover', function() {
               this.setIcon(highlightedIcon);
             });
+
             marker.addListener('mouseout', function() {
               this.setIcon(defaultIcon);
             });
@@ -88,22 +89,27 @@ var viewModel = function(){
           function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker != marker) {
               infowindow.marker = marker;
-              infowindow.setContent(marker.title);
+              infowindow.setContent(marker.cursor);
+              marker.setAnimation(google.maps.Animation.BOUNCE);
               infowindow.open(map, marker);
 
-              //marker.addListener('mouseout', function(){
-              //  infowindow.close(map, marker);
-              //});
-
-              marker.addListener('closeclick', function(){
+              marker.addListener('mouseout', function(){
                 infowindow.close(map, marker);
+
               });
 
-              marker.addListener('doubleclick', function(){
-                infowindow.setMarker(null);
+              marker.addListener('click', function(){
+                marker.setAnimation(null);
               });
+
+              //marker.addListener('dblclick', function(){
+              //  infowindow.setMarker(null);
+              //});
             }
           }
+
+
+
 
           function makeMarkerIcon(markerColor, a) {
             var markerImage = new google.maps.MarkerImage( 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +  '|60|_|%E2%80%A2',
@@ -113,6 +119,7 @@ var viewModel = function(){
               new google.maps.Size(a, 34));
             return markerImage;
           }
+
 
 
 
