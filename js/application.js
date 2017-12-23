@@ -3,17 +3,18 @@ var model = [
   {name: 'Robert Treat Center', address: '50 Park Pl,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.739037 , lng: -74.168635}]},
   {name: 'Newark Museum', address: '49 Washington St,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716 }]},
   {name: 'University Hospital', address: '150 Bergen St,', city:'Newark, NJ 07103', localLocation:[{lat: 40.740356 , lng: -74.190241 }]},
+  {name: 'Newark ShopRite', address: '206 Springfield Ave', city:'Newark, NJ 07103', localLocation:[{lat: 40.736670 , lng: -74.186159 }]},
   {name: 'CityPlex 12', address: '360-394 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.733553 , lng: -74.196379 }]},
-  {name: "Applebee's Grill", address: '383 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
+  {name: "Applebee Grill", address: '383 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
   {name: "Wendy's Place", address: '427 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732158 , lng: -74.199454 }]},
   {name: 'Home Depot', address: '399-443 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
 
 
 var viewModel = function(){
   var map;
-  var myPlaces = ko.observableArray();
-  var myLocation2;
   var markers = [];
+  var myPlaces = ko.observableArray();
+
 
   var updateArray = function () {
     model.forEach(function(PlaceItem){
@@ -21,83 +22,37 @@ var viewModel = function(){
     });
   };
 
-  // var myLocation = ko.computed(function(){
-    //var mylatlng = myPlaces()[0].lat + ',' + myPlaces()[0].lng;
-    //return mylatlng;
-  //});
-
- var myLocation = model[1].localLocation[0];
-
- var setmylocation = function (){
-   myLocation2 = myPlaces()[4].localLocation[0];
- };
-
 
   var configureBindingHandlers = function() {
 		ko.bindingHandlers.mapper = {
 				init: function(element, valueAccessor){
 					map = new google.maps.Map(element, {
-            center: myLocation2,
-						zoom: 15
+            center: myPlaces()[4].localLocation[0],
+						zoom: 12
 					});
 
-          var defaultIcon = makeMarkerIcon('9e4545',  21);
-          var highlightedIcon = makeMarkerIcon('e50615', 41);
           var bounds = new google.maps.LatLngBounds();
           var infowindowcontainer = new google.maps.InfoWindow();
+
           for (var i = 0; i < model.length; i++) {
-            var maklocation = model[i].localLocation[0];
-            var makaddress = model[i].address;
-            var maktitle = model[i].name;
-            var makcity = model[i].city;
+            var maklocation = myPlaces()[i].localLocation[0];
+            var makaddress = myPlaces()[i].address;
+            var maktitle = myPlaces()[i].name;
+            var makcity = myPlaces()[i].city;
             var marker = new google.maps.Marker({
               position: maklocation,
               map: map,
-              //title: maktitle,
               name: maktitle,
               animation: google.maps.Animation.DROP,
               cursor: '<h4>' + maktitle + '</h4>' + makaddress + '<br>' + makcity,
-              //icon: defaultIcon,
-              fillColor: "#00F",
-              scale: 10,
               id: i
-
             });
-
             markers.push(marker);
             console.log(marker.name);
-
-
-
             marker.addListener('mouseover', function(){
               populateInfoWindow(this, infowindowcontainer);
-              //setTimeout(populateInfoWindow, 1000);
-
             });
-
-            marker.addListener('click', function(){
-              toggleBounce(this);
-              //setTimeout(toggleBounce(this), 1500);
-            });
-
-            /**
-             *
-            marker.addListener('mouseover', function() {
-              this.setIcon(highlightedIcon);
-            });
-
-            marker.addListener('mouseout', function() {
-              this.setIcon(defaultIcon);
-            });* */
-
             bounds.extend(markers[i].position);
-
-            //google.maps.event.addListener(marker, 'click', function () {
-              //toggleBounce();
-            //  infowindow.open(map, marker);
-              //setTimeout(toggleBounce, 1500);
-            //});
-
           }
         map.fitBounds(bounds);
 
@@ -108,59 +63,25 @@ var viewModel = function(){
               infowindow.marker = marker;
               infowindow.setContent(marker.cursor);
               infowindow.open(map, marker);
-              //marker.setAnimation(google.maps.Animation.BOUNCE);
+              marker.addListener('click', function(){
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {marker.setAnimation(null);}, 1000);
+              });
 
               marker.addListener('mouseout', function(){
                 infowindow.close(map, marker);
-                //marker.setAnimation(null);
-
               });
 
-              //marker.addListener('dblclick', function(){
-              //  infowindow.setMarker(null);
-              //});
             }
           }
-
-
-
-          function toggleBounce (marker) {
-            if ( marker) {
-              if (marker.getAnimation() != null) {
-                marker.setAnimation(null);
-              } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-              }
-            }
-          }
-
-
-
-          function makeMarkerIcon(markerColor, a) {
-            var markerImage = new google.maps.MarkerImage( 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor +  '|60|_|%E2%80%A2',
-              new google.maps.Size(a, 34),
-              new google.maps.Point(0, 0),
-              new google.maps.Point(10, 34),
-              new google.maps.Size(a, 34));
-            return markerImage;
-          }
-
-
-
 
 				}
 		};
 	};
 
-  //var centerMap = function (onelocation) {
-    //map.setCenter(onelocation);
-    //google.maps.event.trigger(map, 'resize');
-  //}
-
   init = function () {
     configureBindingHandlers();
     updateArray();
-    setmylocation();
     ko.applyBindings(viewModel);
   };
 
