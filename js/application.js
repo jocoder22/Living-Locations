@@ -6,7 +6,7 @@ var model = [
   {name: 'CityPlex 12', address: '360-394 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.733553 , lng: -74.196379 }]},
   {name: "Applebee's Grill", address: '383 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732625 , lng: -74.196325 }]},
   {name: "Wendy's Place", address: '427 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.732158 , lng: -74.199454 }]},
-  {name: 'Home Depot', address: '399-443 Springfield Ave Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
+  {name: 'Home Depot', address: '399-443 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }] }];
 
 
 var viewModel = function(){
@@ -54,35 +54,52 @@ var viewModel = function(){
               position: maklocation,
               map: map,
               //title: maktitle,
+              name: maktitle,
               animation: google.maps.Animation.DROP,
-              cursor: maktitle + '<br>' + makaddress + '<br>' + makcity,
-              icon: defaultIcon,
+              cursor: '<h4>' + maktitle + '</h4>' + makaddress + '<br>' + makcity,
+              //icon: defaultIcon,
+              fillColor: "#00F",
+              scale: 10,
               id: i
+
             });
 
             markers.push(marker);
+            console.log(marker.name);
+
 
 
             marker.addListener('mouseover', function(){
               populateInfoWindow(this, infowindowcontainer);
+              //setTimeout(populateInfoWindow, 1000);
+
             });
 
-            //marker.addListener('click', function(){
-            //  populateInfoWindow(this, infowindowcontainer);
-            //});
+            marker.addListener('click', function(){
+              toggleBounce(this);
+              //setTimeout(toggleBounce(this), 1500);
+            });
 
+            /**
+             *
             marker.addListener('mouseover', function() {
               this.setIcon(highlightedIcon);
             });
 
             marker.addListener('mouseout', function() {
               this.setIcon(defaultIcon);
-            });
+            });* */
 
             bounds.extend(markers[i].position);
 
+            //google.maps.event.addListener(marker, 'click', function () {
+              //toggleBounce();
+            //  infowindow.open(map, marker);
+              //setTimeout(toggleBounce, 1500);
+            //});
+
           }
-          map.fitBounds(bounds);
+        map.fitBounds(bounds);
 
 
 
@@ -90,16 +107,13 @@ var viewModel = function(){
             if (infowindow.marker != marker) {
               infowindow.marker = marker;
               infowindow.setContent(marker.cursor);
-              marker.setAnimation(google.maps.Animation.BOUNCE);
               infowindow.open(map, marker);
+              //marker.setAnimation(google.maps.Animation.BOUNCE);
 
               marker.addListener('mouseout', function(){
                 infowindow.close(map, marker);
+                //marker.setAnimation(null);
 
-              });
-
-              marker.addListener('click', function(){
-                marker.setAnimation(null);
               });
 
               //marker.addListener('dblclick', function(){
@@ -108,6 +122,17 @@ var viewModel = function(){
             }
           }
 
+
+
+          function toggleBounce (marker) {
+            if ( marker) {
+              if (marker.getAnimation() != null) {
+                marker.setAnimation(null);
+              } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+              }
+            }
+          }
 
 
 
