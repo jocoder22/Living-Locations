@@ -49,6 +49,14 @@ var viewModel = function(){
             });
             markers.push(marker);
             console.log(marker.name);
+
+
+            this.showMarker = function(){
+              populateInfoWindow(this, infowindowcontainer);
+            }
+
+
+
             marker.addListener('mouseover', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
