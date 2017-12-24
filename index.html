@@ -36,7 +36,7 @@
             </div>
 
             <ul data-bind="foreach: myPlaces">
-              <li  data-bind="text: name" class="clan"></li>
+              <li data-bind="text: name, click: $parent.showMarker" class=" clan"></li>
             </ul>
           </div>
         </div>
