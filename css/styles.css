@@ -49,10 +49,12 @@ ul {
   margin: 0;
   text-decoration: none;
   font-size: 25px;
+  font-weight: bold;
   color: #7a7c7f;
   border-bottom: 0.5px solid #fff;
   height: 100%;
-  cursor: url(hand.cur), pointer;
+  cursor:  pointer;
+  text-shadow: 0px 6px 5px #f7f7f7 0 1px 1px
 }
 
 .clan:hover {
