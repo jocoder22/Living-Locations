@@ -16,8 +16,34 @@ var myAddress = ['50 Park Pl, Newark NJ 07102', '49 Washington St, Newark NJ 071
 var viewModel = function(){
   var map;
   var markers = [];
-  var myPlaces = ko.observableArray([]);
+  var myPlaces = ko.observableArray();
+  var placeNames = ko.observableArray();
+  var query1 = ko.observable('search');
 
+
+  model.forEach(function(data) {
+    myPlaces.push(data);
+    placeNames.push(data.name.toLowerCase());
+  });
+
+
+
+
+  var filterPlace = ko.dependentObservable(function () {
+    var filter = query1().toLowerCase();
+    return ko.utils.arrayFilter(myPlaces(), function (item) {
+      return item.name.toLowerCase().indexOf(filter) !== -1;
+    });
+  });
+
+
+
+
+
+  console.log(myPlaces());
+  console.log(placeNames());
+/**
+ *
 
   $(function(){
     for (var i = 0; i < myAddress.length; i++) {
@@ -47,7 +73,7 @@ var viewModel = function(){
 
   });
 
-
+*/
   var configureBindingHandlers = function() {
 		ko.bindingHandlers.mapper = {
 				init: function(element, valueAccessor){

@@ -27,7 +27,9 @@
             <br><br><br><br><br>
 
             <div class="input-group bb">
-              <input type="text" class="form-control" placeholder="Search" name="search">
+              <!--<input type="text" class="form-control" name="search" placeholder="Search"  type="search"  data-bind="value: query1, valueUpdate: 'keyup'" autocomplete="off"> -->
+              <input type="search" class="form-control" placeholder="Search"  data-bind="value:
+              $parent.query1, valueUpdate: 'keyup'" autocomplete="off">
               <div class="input-group-btn">
                 <button class="btn btn-default" type="submit">
                   <i class="glyphicon glyphicon-search"></i>
