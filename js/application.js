@@ -1,4 +1,7 @@
 
+
+
+
 var model = [
   {name: 'Robert Treat Center', address: '50 Park Pl,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.739037 , lng: -74.168635}]},
   {name: 'Newark Museum', address: '49 Washington St,', city: 'Newark, NJ 07102', localLocation:[{lat: 40.743108 , lng: -74.171716}]},
@@ -10,6 +13,10 @@ var model = [
   {name: 'Home Depot', address: '399-443 Springfield Ave,', city: 'Newark, NJ 07103', localLocation:[{lat: 40.731358 , lng: -74.198435 }]}];
 
 
+
+
+
+
 var myAddress = ['50 Park Pl, Newark NJ 07102', '49 Washington St, Newark NJ 07102', '150 Bergen St, Newark NJ 07103', '25 Lafayette St, Newark, NJ 07102', '360-394 Springfield Ave, Newark NJ 07103', '383 Springfield Ave, Newark NJ 07103', '94 William St, Newark, NJ 07102','399-443 Springfield Ave, Newark NJ 07103'];
 
 
@@ -17,8 +24,9 @@ var viewModel = function(){
   var map;
   var markers = [];
   var myPlaces = ko.observableArray();
+  var myPlaces3 = ko.observableArray([]);
   var placeNames = ko.observableArray();
-  var query1 = ko.observable('search');
+  var query1 = ko.observable('');
 
 
   model.forEach(function(data) {
@@ -28,20 +36,27 @@ var viewModel = function(){
 
 
 
-
-  var filterPlace = ko.dependentObservable(function () {
-    var filter = query1().toLowerCase();
-    return ko.utils.arrayFilter(myPlaces(), function (item) {
-      return item.name.toLowerCase().indexOf(filter) !== -1;
-    });
+  var filterPlace = ko.computed(function () {
+    var myFilter = query1().toLowerCase();
+    if (!myFilter) {
+      //return myPlaces();
+      return myPlaces();
+    } else {
+      //return ko.utils.arrayFilter(myPlaces(), function (item) {
+      return ko.utils.arrayFilter(myPlaces(), function (item) {
+        //myPlaces2(item.name().toLowerCase().indexOf(myFilter) !== -1);
+        return item.name.toLowerCase().indexOf(myFilter) >=0;
+        //return ko.utils.stringStartsWith(item.name().toLowerCase(), myFilter);
+        //return myPlaces(myPlaces2()); //>=0
+      });
+    }
   });
-
-
-
 
 
   console.log(myPlaces());
   console.log(placeNames());
+  console.log("this is filterPlace:  " + filterPlace());
+  console.log("this is myPlaces3:  " + myPlaces3());
 /**
  *
 
@@ -138,6 +153,7 @@ var viewModel = function(){
   init = function () {
     configureBindingHandlers();
     //updateArray();
+    filterPlace();
     ko.applyBindings(viewModel);
   };
 
@@ -145,6 +161,9 @@ var viewModel = function(){
 
   return{
     map: map,
-    myPlaces: myPlaces,
+    //myPlaces: myPlaces,
+    //myPlaces3: myPlaces3,
+    query1: query1,
+    filterPlace: filterPlace,
   };
 }();
