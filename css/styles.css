@@ -53,6 +53,11 @@ ul {
   display: none;
 }
 
+.btn {
+  background-color: black;
+  color: white;
+}
+
 .bt, .btn-default, .btn-md {
   background-color: black;
 }
