@@ -119,7 +119,8 @@ var viewModel = function(){
 		ko.bindingHandlers.mapper = {
 				init: function(element, valueAccessor){
 					map = new google.maps.Map(element, {
-            center: model[3].localLocation[0],
+            center: new google.maps.LatLng(resultParsed[0].response.venues[0].location.lat,resultParsed[0].response.venues[0].location.lng),
+            //center: model[3].localLocation[0],
             //center: myPlaces3()[0].localLocation[0],
 						zoom: 12
 					});
@@ -234,6 +235,18 @@ var model22 = function (data) {
 };
 
 
+function model33 (name, address, stats, lat, lng) {
+  var self = this;
+  self.name = ko.observable(name);
+  self.address = ko.observable(address);
+  self.stats = ko.observable(stats);
+  self.lat = ko.observable(lat);
+  self.lng = ko.observable(lng);
+  self.latlng = ko.computed(function(){
+    return '{lat: '+ self.lat() + ' , ' + 'lng: ' + self.lng() + ' }';
+  });
+};
+
 var resultParsed = ko.utils.parseJson(jsonresult22);
 
 //do some basic mapping (without mapping plugin)
@@ -242,15 +255,22 @@ var finalData22 = ko.utils.arrayMap(resultParsed, function() {
   return new model22(resultParsed[0].response.venues[0].name, resultParsed[0].response.venues[0].location.formattedAddress, resultParsed[0].response.venues[0].location.stats, resultParsed[0].response.venues[0].location.lat, resultParsed[0].response.venues[0].location.lng);
 });
 
-var finalData = new model22(resultParsed[0].response.venues[0].name, resultParsed[0].response.venues[0].location.formattedAddress, resultParsed[0].response.venues[0].location.stats, resultParsed[0].response.venues[0].location.lat, resultParsed[0].response.venues[0].location.lng);
+var resp = resultParsed[0].response.venues[0];
+var llresp = resp.location;
+var finalData = ko.observableArray([
+  new model33(resp.name, llresp.formattedAddress, llresp.stats, llresp.lat, llresp.lng),
+  new model33(resp.name, llresp.formattedAddress, llresp.stats, llresp.lat, llresp.lng),
+  new model33(resp.name, llresp.formattedAddress, llresp.stats, llresp.lat, llresp.lng)
+]);
 
 
-console.log(finalData);
+console.log(finalData());
 console.log('This is the parsed data');
 console.log(resultParsed);
-console.log(resultParsed[0].response.venues[0].name);
-
+console.log(resultParsed[0].response.venues[0].location.lat);
+console.log(model33);
+console.log(finalData()[1].address);
 console.log('below is mapped data');
-console.log(finalData);
+console.log(finalData());
 console.log('below is json data');
 console.log(jsonresult22);
