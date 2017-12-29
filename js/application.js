@@ -60,6 +60,8 @@ var viewModel = function(){
 
   var ArrayJason = [];
   var ArrayJason2;
+/**
+ *
 
   $(function(){
     for (var i = 0; i < myAddress.length; i++) {
@@ -95,8 +97,8 @@ var viewModel = function(){
   //ArrayJason2.forEach(function(data) {
     //myPlaces3.push(data);
   //});
-
-  console.log(myPlaces3());
+*/
+  //console.log(myPlaces3());
   //console.log(myPlaces3()[0].lat());
   //console.log(myPlaces3()[4].lat());
 
@@ -201,6 +203,54 @@ var viewModel = function(){
 
 
 
-var result22 = {"meta":{"code":200,"requestId":"5a4023f54c1f6770958c259c"},"notifications":[{"type":"notificationTray","item":{"unreadCount":0}}],"response":{"venues":[{"id":"4f32c28419836c91c7f77e80","name":"CityPlex 12","contact":{"phone":"9736425555","formattedPhone":"(973) 642-5555"},"location":{"address":"360 Springfield Ave","lat":40.73333,"lng":-74.19541,"labeledLatLngs":[{"label":"display","lat":40.73333,"lng":-74.19541}],"postalCode":"07103","cc":"US","city":"Newark","state":"NJ","country":"United States","formattedAddress":["360 Springfield Ave","Newark, NJ 07103"]},"categories":[{"id":"4bf58dd8d48988d17f941735","name":"Movie Theater","pluralName":"Movie Theaters","shortName":"Movie Theater","icon":{"prefix":"https:\/\/ss3.4sqi.net\/img\/categories_v2\/arts_entertainment\/movietheater_","suffix":".png"},"primary":true}],"verified":false,"stats":{"checkinsCount":20,"usersCount":14,"tipCount":1},"url":"http:\/\/cityplex12.com","allowMenuUrlEdit":true,"beenHere":{"lastCheckinExpiredAt":0},"specials":{"count":0,"items":[]},"hereNow":{"count":0,"summary":"Nobody here","groups":[]},"referralId":"v-1514152949","venueChains":[{"id":"556cdd65aceaff43eb03dde7"}],"hasPerk":false}],"confident":false,"geocode":{"what":"","where":"383 Springfield Ave, Newark, NJ 07103","feature":{"cc":"US","displayName":"383 Springfield Ave","woeType":100},"parents":[]}}}
+var jsonresult22 = '[{"meta":{"code":200,"requestId":"5a4023f54c1f6770958c259c"},"notifications":[{"type":"notificationTray","item":{"unreadCount":0}}],"response":{"venues":[{"id":"4f32c28419836c91c7f77e80","name":"CityPlex 12","contact":{"phone":"9736425555","formattedPhone":"(973) 642-5555"},"location":{"address":"360 Springfield Ave","lat":40.73333,"lng":-74.19541,"labeledLatLngs":[{"label":"display","lat":40.73333,"lng":-74.19541}],"postalCode":"07103","cc":"US","city":"Newark","state":"NJ","country":"United States","formattedAddress":["360 Springfield Ave","Newark, NJ 07103"]},"categories":[{"id":"4bf58dd8d48988d17f941735","name":"Movie Theater","pluralName":"Movie Theaters","shortName":"Movie Theater","icon":{"prefix":"https:\/\/ss3.4sqi.net\/img\/categories_v2\/arts_entertainment\/movietheater_","suffix":".png"},"primary":true}],"verified":false,"stats":{"checkinsCount":20,"usersCount":14,"tipCount":1},"url":"http:\/\/cityplex12.com","allowMenuUrlEdit":true,"beenHere":{"lastCheckinExpiredAt":0},"specials":{"count":0,"items":[]},"hereNow":{"count":0,"summary":"Nobody here","groups":[]},"referralId":"v-1514152949","venueChains":[{"id":"556cdd65aceaff43eb03dde7"}],"hasPerk":false}],"confident":false,"geocode":{"what":"","where":"383 Springfield Ave, Newark, NJ 07103","feature":{"cc":"US","displayName":"383 Springfield Ave","woeType":100},"parents":[]}}}]'
 
 //ko.mapping.fromJS(data, viewModel);
+/**
+ *
+
+//a JSON string that we got from the server that wasn't automatically converted to an object
+var JSONdataFromServer = '[{"name":"Peach","category":"Fruits","price":1},{"name":"Plum","category":"Fruits","price":0.75},{"name":"Donut","category":"Bread","price":1.5},{"name":"Milk","category":"Dairy","price":4.50}]';
+
+//parse into an object
+var dataFromServer = ko.utils.parseJson(JSONdataFromServer);
+
+//do some basic mapping (without mapping plugin)
+var mappedData = ko.utils.arrayMap(dataFromServer, function(item) {
+    return new Item(item.name, item.category, item.price);
+});
+
+ */
+var model22 = function (data) {
+  var self = this;
+  self.name = ko.observable(data.name);
+  self.address = ko.observable(data.address);
+  self.stats = ko.observable(data.stats);
+  self.lat = ko.observable(data.lat);
+  self.lng = ko.observable(data.lng);
+  self.latlng = ko.computed(function(){
+    return '{lat: '+ self.lat() + ' , ' + 'lng: ' + self.lng() + ' }';
+  });
+};
+
+
+var resultParsed = ko.utils.parseJson(jsonresult22);
+
+//do some basic mapping (without mapping plugin)
+var finalData22 = ko.utils.arrayMap(resultParsed, function() {
+  //var resp = data.response.venues[0]; var llresp = resp.location;
+  return new model22(resultParsed[0].response.venues[0].name, resultParsed[0].response.venues[0].location.formattedAddress, resultParsed[0].response.venues[0].location.stats, resultParsed[0].response.venues[0].location.lat, resultParsed[0].response.venues[0].location.lng);
+});
+
+var finalData = new model22(resultParsed[0].response.venues[0].name, resultParsed[0].response.venues[0].location.formattedAddress, resultParsed[0].response.venues[0].location.stats, resultParsed[0].response.venues[0].location.lat, resultParsed[0].response.venues[0].location.lng);
+
+
+console.log(finalData);
+console.log('This is the parsed data');
+console.log(resultParsed);
+console.log(resultParsed[0].response.venues[0].name);
+
+console.log('below is mapped data');
+console.log(finalData);
+console.log('below is json data');
+console.log(jsonresult22);
