@@ -24,7 +24,7 @@ var viewModel = function(){
   var map;
   var markers = [];
   var myPlaces = ko.observableArray();
-  var myPlaces3 = ko.observableArray([]);
+  var myPlaces3 = ko.observableArray();
   var placeNames = ko.observableArray();
   var query1 = ko.observable('');
 
@@ -56,9 +56,10 @@ var viewModel = function(){
   console.log(myPlaces());
   console.log(placeNames());
   console.log("this is filterPlace:  " + filterPlace());
-  console.log("this is myPlaces3:  " + myPlaces3());
-/**
- *
+
+
+  var ArrayJason = [];
+  var ArrayJason2;
 
   $(function(){
     for (var i = 0; i < myAddress.length; i++) {
@@ -67,19 +68,20 @@ var viewModel = function(){
 
       $.getJSON(foursquareUrl, function(data){
         format: 'json'
+        //dataType: 'JSON'
       }).done(function(data){
-        var listings = {};
+        var listings = [];
+        //var data2 = JSON.parse(data);
         var resp = data.response.venues[0]; var llresp = resp.location;
         listings.name = resp.name;
         listings.stats = resp.stats;
         listings.lat = llresp.lat;
         listings.lng = llresp.lng;
         listings.address = llresp.formattedAddress;
-        listings.localLocation = {};
-        listings.latlng = llresp.lat + ',' + llresp.lng;
-        listings.localLocation.lat = llresp.lat;
-        listings.localLocation.lng = llresp.lng;
-        myPlaces.push(listings);
+        //listings.localLocation = '[{ lat: llresp.lat  , lng:  llresp.lng  }]';
+        console.log(listings);
+        //ArrayJason.push(listings);
+        myPlaces3.push(listings);
 
       }).fail(function(xhr, errorType, exception) {
         alert( xhr.status + " " + errorType+"\n\ " + exception);
@@ -88,12 +90,35 @@ var viewModel = function(){
 
   });
 
-*/
+  //var ArrayJasonParse = JSON.parse(ArrayJason);
+  //ArrayJason2 = ko.mapping.fromJS(ArrayJason)
+  //ArrayJason2.forEach(function(data) {
+    //myPlaces3.push(data);
+  //});
+
+  console.log(myPlaces3());
+  //console.log(myPlaces3()[0].lat());
+  //console.log(myPlaces3()[4].lat());
+
+
+
+  //var boundMarker = function(marker){
+  //  marker.setAnimation(google.maps.Animation.BOUNCE);
+  //  setTimeout(function () {marker.setAnimation(null);}, 1000);
+  //};
+
+
+
+
+
+
+
   var configureBindingHandlers = function() {
 		ko.bindingHandlers.mapper = {
 				init: function(element, valueAccessor){
 					map = new google.maps.Map(element, {
             center: model[3].localLocation[0],
+            //center: myPlaces3()[0].localLocation[0],
 						zoom: 12
 					});
 
@@ -123,6 +148,11 @@ var viewModel = function(){
             marker.addListener('mouseover', function(){
               populateInfoWindow(this, infowindowcontainer);
             });
+            //var boundMarker = function(marker){
+            //  marker.setAnimation(google.maps.Animation.BOUNCE);
+              //setTimeout(function () {marker.setAnimation(null);}, 1000);
+            //};
+
             bounds.extend(markers[i].position);
           }
         map.fitBounds(bounds);
@@ -153,6 +183,7 @@ var viewModel = function(){
   init = function () {
     configureBindingHandlers();
     //updateArray();
+    //boundMarker();
     filterPlace();
     ko.applyBindings(viewModel);
   };
@@ -161,9 +192,15 @@ var viewModel = function(){
 
   return{
     map: map,
-    //myPlaces: myPlaces,
+    myPlaces: myPlaces,
     //myPlaces3: myPlaces3,
     query1: query1,
     filterPlace: filterPlace,
   };
 }();
+
+
+
+var result22 = {"meta":{"code":200,"requestId":"5a4023f54c1f6770958c259c"},"notifications":[{"type":"notificationTray","item":{"unreadCount":0}}],"response":{"venues":[{"id":"4f32c28419836c91c7f77e80","name":"CityPlex 12","contact":{"phone":"9736425555","formattedPhone":"(973) 642-5555"},"location":{"address":"360 Springfield Ave","lat":40.73333,"lng":-74.19541,"labeledLatLngs":[{"label":"display","lat":40.73333,"lng":-74.19541}],"postalCode":"07103","cc":"US","city":"Newark","state":"NJ","country":"United States","formattedAddress":["360 Springfield Ave","Newark, NJ 07103"]},"categories":[{"id":"4bf58dd8d48988d17f941735","name":"Movie Theater","pluralName":"Movie Theaters","shortName":"Movie Theater","icon":{"prefix":"https:\/\/ss3.4sqi.net\/img\/categories_v2\/arts_entertainment\/movietheater_","suffix":".png"},"primary":true}],"verified":false,"stats":{"checkinsCount":20,"usersCount":14,"tipCount":1},"url":"http:\/\/cityplex12.com","allowMenuUrlEdit":true,"beenHere":{"lastCheckinExpiredAt":0},"specials":{"count":0,"items":[]},"hereNow":{"count":0,"summary":"Nobody here","groups":[]},"referralId":"v-1514152949","venueChains":[{"id":"556cdd65aceaff43eb03dde7"}],"hasPerk":false}],"confident":false,"geocode":{"what":"","where":"383 Springfield Ave, Newark, NJ 07103","feature":{"cc":"US","displayName":"383 Springfield Ave","woeType":100},"parents":[]}}}
+
+//ko.mapping.fromJS(data, viewModel);
