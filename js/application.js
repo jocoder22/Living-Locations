@@ -263,13 +263,15 @@ var finalData = ko.observableArray([
   new model33(resp.name, llresp.formattedAddress, llresp.stats, llresp.lat, llresp.lng)
 ]);
 
-
+console.log("this is the final data");
 console.log(finalData());
 console.log('This is the parsed data');
 console.log(resultParsed);
+console.log("this is latitude")
 console.log(resultParsed[0].response.venues[0].location.lat);
 console.log(model33);
-console.log(finalData()[1].address);
+console.log("this is address from observableArray")
+console.log( ko.toJSON(finalData()[1].address));
 console.log('below is mapped data');
 console.log(finalData());
 console.log('below is json data');
