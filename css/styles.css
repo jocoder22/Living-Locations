@@ -179,7 +179,7 @@ span {
     display: inline-block;
   }
 
-  #mnm {
+  #mnm, #btnclose {
     display: none;
   }
 
