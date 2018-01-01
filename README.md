@@ -29,6 +29,7 @@
 - Once loaded, the application will display:
     - A googlemap with markers identifying the locations in the neighborhood
     - A sidebar with list of locations.
+    - clicking on the name of location will animate its marker on the map
     - An input box. This box can be used to filter and search through the list of locations for display on the map.
 
 Hovering, clicking on the name of the location on the sidebar or search for location using the input box with display the location on the map as marker with infowindow.
