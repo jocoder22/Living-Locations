@@ -2,8 +2,6 @@
 - This application is single page responsive application featuring a map of my  neighborhood in Newark, New Jersey. The application highlight few important places within the neighborhood:
   - Robert Treat Center
   - Newark Museum
-  - New Jersey Institute of Technology
-  - University Hospital
   - CityPlex 12 Movie theatre
   - Applebee's Grill
   - Wendy's Place
