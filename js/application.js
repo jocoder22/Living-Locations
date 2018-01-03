@@ -1,4 +1,19 @@
 
+var menu = document.querySelector("#navv");
+var main = document.querySelector("#mp");
+var drawer = document.querySelector(".listbox");
+
+menu.addEventListener('click', function(e) {
+  drawer.classList.toggle('open');
+  e.stopPropagation();
+    //slide.style.transform = "translateX(300px)";
+});
+
+main.addEventListener('click', function() {
+  drawer.classList.remove('open');
+    //slide.style.transform = "translateX(0px)";
+});
+
 
 
 
