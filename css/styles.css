@@ -102,9 +102,19 @@ span {
   margin-left: 19px;
 }
 
+.hh {
+    /* margin: 10px 20px; */
+    margin-top: 0px;
+    margin-left: 20px;
+    color: white;
+    cursor: pointer;
+    font-size: 40px;
+    background-color: #030716;
+    padding: 0;
+    display: none;
+  }
 
-
-.listbox {
+/* .listbox {
   background-color: green;
   width: 300px;
   height: 100%;
@@ -112,7 +122,7 @@ span {
   -webkit-transform: translate(-300px, 0);
   transform: translate(-300px, 0);
   transition: 1s ease;
-}
+} */
 
 .listbox.open {
   -webkit-transform: translate(0, 0);
@@ -172,7 +182,7 @@ span {
 
 
 
-
+/*
 @media screen and (min-width: 600px) {
   .nav {
     position: relative;
@@ -189,7 +199,7 @@ span {
   #mp {
     width: auto;
       flex-grow: 1.0;
-  }
+  } */
   /* button { */
   /* display: none; */
   /* } */
@@ -199,7 +209,6 @@ span {
 
 
 
-/*
 @media screen and (max-width: 420px) {
   .input-group {
     width: 66.66667vw;
@@ -232,4 +241,3 @@ span {
   }
 
 }
-*/
