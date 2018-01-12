@@ -1,0 +1,72 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width:100%
+}
+body{
+  display: flex;
+  flex-wrap: wrap;
+}
+div{
+  height:100%;
+  width: 100%;
+}
+div:first-child{
+  background-color: red;
+  height: 80px;
+
+}
+button{
+  background-color: black;
+  color: white;
+  margin: 10px;
+  border: solid black 1px;
+}
+#div2{
+  background-color: blue;
+
+}
+#div3{
+  background-color: green;
+  flex-grow: 1;
+  height: 100%;
+
+}
+.mlist{
+  background-color: blue;
+  width: 200px;
+  height: 100%;
+  position: absolute;
+  -webkit-transform: translate(-200px, 80px);
+  transform: translate(-200px, 80px);
+  transition: 2s ease;
+}
+.mlist.open{
+  -webkit-transform: translate(0, 80px);
+  transform: translate(0, 80px);
+}
+
+
+
+ @media screen and (min-width: 400px) {
+  #div2 {
+    position: relative;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  body {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: row wrap;
+      flex-flow: row wrap;
+    }
+  #div3 {
+    width: auto;
+    flex-grow: 1;
+  }
+  #btn11 {
+    display: none;
+  }
+
+}
